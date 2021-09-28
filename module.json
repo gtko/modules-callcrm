@@ -1,0 +1,13 @@
+{
+    "name": "CallCRM",
+    "alias": "callcrm",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

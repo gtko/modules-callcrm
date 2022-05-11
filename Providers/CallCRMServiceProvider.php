@@ -31,6 +31,7 @@ class CallCRMServiceProvider extends ServiceProvider
 
     public function boot() :void
     {
+        $this->app->register(AuthServiceProvider::class);
         $this->registerViews();
         $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/Migrations'));
     }

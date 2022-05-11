@@ -3,6 +3,7 @@
 namespace Modules\CallCRM\Http\Livewire;
 
 use Livewire\Component;
+use Modules\TaskCalendarCRM\Contracts\Repositories\TaskRepositoryContract;
 
 class AppelToggleJoint extends Component
 {
@@ -21,9 +22,13 @@ class AppelToggleJoint extends Component
 
     public function toogle($status)
     {
-
         $this->appel->joint = $status;
         $this->appel->save();
+
+
+        $taskRep = app(TaskRepositoryContract::class);
+        $taskRep->checkTaskByTaskable($this->appel->caller, $this->appel);
+
         $this->emit('jointRefresh');
     }
 

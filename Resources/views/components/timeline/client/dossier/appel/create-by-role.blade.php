@@ -1,4 +1,4 @@
-<x-corecrm::timeline-item class="bg-red-400">
+<x-corecrm::timeline-item class="bg-purple-400">
     <x-slot name="image">
         <img alt="" src="{{$flow->datas->getUser()->avatar_url}}"/>
     </x-slot>
@@ -16,18 +16,16 @@
                     Rappel pour le {!! $flow->datas->getAppel()->date->format('d-m-Y H:i') !!}
                 </div>
                 <div class="mb-2">
-                A faire par:
+                A faire par le role:
                 <strong>
-                    {!! $flow->datas->getAppel()->caller->format_name !!}
+                    {!! $flow->datas->getRole()->name !!}
                 </strong>
                 </div>
-{{--                <livewire:callcrm::appel-status-joint :key="$flow->datas->getAppel()->id.'__status'"--}}
-{{--                                                      :appel="$flow->datas->getAppel()" />--}}
+{{--                <livewire:callcrm::appel-status-joint :appel="$flow->datas->getAppel()"></livewire:callcrm::appel-status-joint>--}}
                 <div class="my-4">
                     <strong>{!! $flow->datas->getAppel()->note !!}</strong>
                 </div>
-{{--                <livewire:callcrm::appel-toggle-joint :key="$flow->datas->getAppel()->id.'__actions'"--}}
-{{--                                                      :appel-id="$flow->datas->getAppel()->id"/>--}}
+{{--                <livewire:callcrm::appel-toggle-joint :appel-id="$flow->datas->getAppel()->id"></livewire:callcrm::appel-toggle-joint>--}}
             </div>
         </div>
         <div class="text-xs text-gray-500 ml-auto">{{$flow->created_at->format('H:i')}}</div>

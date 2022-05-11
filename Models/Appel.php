@@ -11,6 +11,7 @@ use Modules\BaseCore\Contracts\Entities\UserEntity;
 use Modules\CoreCRM\Models\Dossier;
 use Modules\SearchCRM\Entities\SearchResult;
 use Modules\SearchCRM\Interfaces\SearchableModel;
+use Modules\TaskCalendarCRM\Interfaces\TaskableModel;
 
 /**
  * Class Appels
@@ -26,7 +27,7 @@ use Modules\SearchCRM\Interfaces\SearchableModel;
  * @mixin Builder
  * @mixin \Illuminate\Database\Query\Builder
  */
-class Appel extends Model implements SearchableModel
+class Appel extends Model implements SearchableModel, TaskableModel
 {
     use HasFactory;
 
@@ -64,5 +65,31 @@ class Appel extends Model implements SearchableModel
        );
        $result->setSvg('phone');
        return $result;
+    }
+
+    public function checkHandle($optionsChecked = null)
+    {
+        if($optionsChecked === 'join'){
+            $this->joint = 1;
+        }
+
+        if($optionsChecked === 'non-join'){
+            $this->joint = 0;
+        }
+
+        $this->save();
+    }
+
+    public function canCheck(): bool
+    {
+        return true;
+    }
+
+    public function actions(): array
+    {
+        return [
+            'join' => "Joint",
+            'non-join' => 'Non-joint',
+        ];
     }
 }

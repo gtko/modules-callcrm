@@ -2,6 +2,7 @@
 
 namespace Modules\CallCRM\Http\Livewire;
 
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Modules\BaseCore\Actions\Dates\DateStringToCarbon;
 use Modules\BaseCore\Contracts\Entities\UserEntity;
@@ -10,9 +11,11 @@ use Modules\BaseCore\Contracts\Repositories\UserRepositoryContract;
 use Modules\CallCRM\Contracts\Repositories\AppelRepositoryContract;
 use Modules\CallCRM\Flow\Attributes\ClientDossierAppelCreate;
 use Modules\CallCRM\Flow\Attributes\ClientDossierAppelCreateByRole;
+use Modules\CoreCRM\Contracts\Services\FlowContract;
 use Modules\CoreCRM\Models\Client;
 use Modules\CoreCRM\Models\Dossier;
 use Modules\CoreCRM\Services\FlowCRM;
+use Modules\CrmAutoCar\Flow\Attributes\ClientDossierRappeler;
 use Modules\TaskCalendarCRM\Contracts\Repositories\TaskRepositoryContract;
 use Modules\TaskCalendarCRM\Flow\Attributes\AddTaskCreate;
 
@@ -104,6 +107,8 @@ class Appel extends Component
             $task = app(TaskRepositoryContract::class)
                 ->createTask($caller, $date, 'Rappel', $message, $url,0,"#1969bf", $this->dossier, $data);
             (new FlowCRM())->add($this->dossier, new AddTaskCreate($task));
+            app(FlowContract::class)
+                ->add($this->dossier, new ClientDossierRappeler($this->dossier, $this->dossier->commercial, Auth::user()));
 //            (new FlowCRM())->add($this->dossier, new ClientDossierAppelCreate(\Auth::user(), $appel));
         }
 
